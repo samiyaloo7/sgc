@@ -91,8 +91,6 @@ export default function RegistrationPage() {
       return;
     }
 
-    console.log('Form Submitted:', formData);
-
     try {
       // Step 1: Get the current counter value from the 'counters' collection
       const counterDocRef = doc(db, "counters", "userIdCounter");
@@ -119,9 +117,14 @@ export default function RegistrationPage() {
         id: newId
       });
 
-      setStep(newId)
+      setFormData({
+        fullName: '',
+        phone: '',
+        whatsapp: '',
+        ageGroup: '',
+      })
 
-      console.log("Document written with ID: ", newId);
+      setStep(newId)
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -206,10 +209,22 @@ export default function RegistrationPage() {
                 Register
               </Button>
             </form>
-
+          </CardContent>            
+        ) : (
+          <CardContent className="p-0">
+            <div className="w-full h-[50vh] relative">
+              <Image src="/background.jpg" objectFit="contain" fill alt="sgc-group" />
+            </div>
+            <div className="space-y-6 mt-4 p-4">
+              <p className="text-2xl font-bold text-green-700">Registration Successful</p>
+              <p className="text-xl font-bold text-gray-700">
+                Registration ID: <span className="text-blue-700">{step}</span>
+              </p>
+              <Button onClick={() => setStep(null)}>Register Again</Button>
+            </div>
             <Separator />
 
-            <div className="text-sm text-gray-700 space-y-3">
+            <div className="text-sm text-gray-700 space-y-3 p-4">
               <p className="flex items-center gap-2">
                 <ClockIcon className="w-4 h-4 text-blue-500" />
                 <span><strong>Time:</strong> Sunday 6 to 8, Monday to Saturday: 8 to 10</span>
@@ -226,19 +241,6 @@ export default function RegistrationPage() {
                 <ShirtIcon className="w-4 h-4 text-yellow-600" />
                 <span><strong>Dress Code:</strong> The white ocean</span>
               </p>
-            </div>
-          </CardContent>
-        ) : (
-          <CardContent className="p-0">
-            <div className="w-full h-[50vh] relative">
-              <Image src="/background.jpg" objectFit="contain" fill alt="sgc-group" />
-            </div>
-            <div className="space-y-6 mt-4 p-4">
-              <p className="text-2xl font-bold text-green-700">Registration Successful</p>
-              <p className="text-xl font-bold text-gray-700">
-                Registration ID: <span className="text-blue-700">{step}</span>
-              </p>
-              <Button onClick={() => setStep(null)}>Register Again</Button>
             </div>
           </CardContent>
         )}
